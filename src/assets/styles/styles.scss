@@ -1,0 +1,44 @@
+.wd-length {
+  color: #AAAAAA;
+  &__container {
+    .label {
+      flex-grow: 1;
+      max-width: 100%;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: normal;
+      -webkit-line-clamp: 1;
+    }
+    .control {
+      width: 140px;
+      background: #212121;
+      &.is-hover {
+        &:hover {
+          background: #3B3B3B;
+        }
+      }
+      &.focus-input {
+        outline: 1px solid #3C67FF;
+      }
+      .decrease, .increase {
+        &:hover {
+          background: #3B3B3B;
+        }
+      }
+      .selected {
+        background: #424242;
+      }
+
+      input[type=number]::-webkit-inner-spin-button,
+      input[type=number]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
+    }
+  }
+}
+
+
+
