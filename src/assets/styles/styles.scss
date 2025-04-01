@@ -23,12 +23,18 @@
         outline: 1px solid #3C67FF;
       }
       .decrease, .increase {
+        color: #F9F9F9;
         &:hover {
           background: #3B3B3B;
         }
       }
       .selected {
         background: #424242;
+        color: #F9F9F9;
+      }
+
+      input {
+        color: #F9F9F9;
       }
 
       input[type=number]::-webkit-inner-spin-button,

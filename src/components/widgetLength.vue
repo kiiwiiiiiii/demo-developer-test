@@ -16,18 +16,15 @@ const handleUnit = (type: string = 'px') => {
 }
 
 const handleStepValue = (increase: boolean) => {
-  if (unit.value === '%') {
-    if ((value.value === 100) && increase){
-      return
-    }
+  if (value.value === 0 && !increase) {
+    return
+  }
 
-    if ((value.value === 0) && !increase) {
+  if (unit.value === '%' && value.value === 100 && increase){
       return
-    }
   }
 
   value.value = increase ? value.value + 1 : value.value - 1;
-
   if (unit.value === '%' && value.value > 100) {
     value.value = 100
   }
@@ -138,7 +135,7 @@ const formatValue = (val: string) => {
         />
         <button :class="['increase w-[36px] flex items-center justify-center rounded-r-lg', {
            'disabled cursor-not-allowed hover:cursor-not-allowed': unit === '%' && value === 100,
-           'hover:cursor-pointer': unit === '%' && value !== 100,
+           'hover:cursor-pointer': unit === 'px',
         }]" @click="handleStepValue(true)"
                 @mouseenter="onMouseEnter"
                 @mouseleave="onMouseLeave">+</button>
