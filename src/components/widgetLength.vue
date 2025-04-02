@@ -38,7 +38,7 @@ const handleStepValue = (increase: boolean) => {
   inputValue.value = '' + value.value
 }
 
-const onMouseEnter = (enterIncreaseButton: true) => {
+const onMouseEnter = (enterIncreaseButton =  true) => {
   if (enterIncreaseButton) {
     mouseEnterButtonIncrese.value = true
   } else {
