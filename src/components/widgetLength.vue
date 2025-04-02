@@ -1,10 +1,12 @@
 <script lang="ts" setup>
 import { ref } from 'vue';
 
-const value = ref<number>(0);
-const inputValue = ref<string>('0');
+const value = ref<number>(1);
+const inputValue = ref<string>('1');
 const unit = ref<string>('%');
 const mouseEnterButton = ref<boolean>(false);
+const mouseEnterButtonIncrese = ref<boolean>(false);
+const mouseEnterButtonDecrease = ref<boolean>(false);
 const isFocusInput = ref<boolean>(false)
 
 const handleUnit = (type: string = 'px') => {
@@ -36,12 +38,20 @@ const handleStepValue = (increase: boolean) => {
   inputValue.value = '' + value.value
 }
 
-const onMouseEnter = () => {
+const onMouseEnter = (enterIncreaseButton: true) => {
+  if (enterIncreaseButton) {
+    mouseEnterButtonIncrese.value = true
+  } else {
+    mouseEnterButtonDecrease.value = true
+  }
+
   mouseEnterButton.value = true
 }
 
 const onMouseLeave = () => {
   mouseEnterButton.value = false
+  mouseEnterButtonIncrese.value = false
+  mouseEnterButtonDecrease.value = false
 }
 
 const handleFocusInput = () => {
@@ -118,15 +128,20 @@ const formatValue = (val: string) => {
     </div>
     <div class="flex items-center gap-2 font-xs h-[36px] wd-length__container">
       <div class="label grow max-w-[100%]">Value</div>
-      <div :class="['control h-full rounded-lg inline-flex',{
+      <div :class="['control h-full rounded-lg inline-flex relative',{
         'is-hover': !mouseEnterButton,
         'focus-input': isFocusInput
       }]">
+        <div v-show="value === 0 && mouseEnterButtonDecrease"
+             class="tooltip tooltip--left flex items-center justify-center min-w-[176px] h-[26px] absolute px-2 py-[3px] translate-x-[-50%] translate-y-[-100%] top-[-8px] left-0 rounded-lg"
+        >
+          <p class="text-xs">Value must greater than 0</p>
+        </div>
         <button :class="['decrease w-[36px] flex items-center rounded-l-lg justify-center', {
-           'disabled cursor-not-allowed hover:cursor-not-allowed': value === 0,
+           'disabled cursor-not-allowed hover:cursor-not-allowed text-neutral-50': value === 0,
            'hover:cursor-pointer': value !== 0,
         }]" @click="handleStepValue(false)"
-                @mouseenter="onMouseEnter"
+                @mouseenter="onMouseEnter(false)"
                 @mouseleave="onMouseLeave">-</button>
         <!--- why don't set type input is number? input 123a -> 123 :(((  --->
         <input v-model="inputValue" class="max-w-[68px] grow text-center flex items-center justify-center focus:outline-none"
@@ -137,8 +152,14 @@ const formatValue = (val: string) => {
            'disabled cursor-not-allowed hover:cursor-not-allowed': unit === '%' && value === 100,
            'hover:cursor-pointer': unit === 'px',
         }]" @click="handleStepValue(true)"
-                @mouseenter="onMouseEnter"
+                @mouseenter="onMouseEnter(true)"
                 @mouseleave="onMouseLeave">+</button>
+        <div
+            v-show="unit === '%' && value === 100 && mouseEnterButtonIncrese"
+            class="tooltip tooltip--right flex items-center justify-center min-w-[176px] h-[26px] absolute px-2 py-[3px] translate-x-[50%] translate-y-[-100%] top-[-8px] right-0 rounded-lg">
+            <p class="text-xs">Value must smaller than 100
+            </p>
+        </div>
       </div>
     </div>
   </div>

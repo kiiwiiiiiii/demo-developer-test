@@ -27,10 +27,18 @@
         &:hover {
           background: #3B3B3B;
         }
+        &.disabled {
+          color: #AAAAAA;
+        }
       }
       .selected {
         background: #424242;
         color: #F9F9F9;
+      }
+
+      .tooltip {
+        color: #F9F9F9;
+        background: #212121;
       }
 
       input {
